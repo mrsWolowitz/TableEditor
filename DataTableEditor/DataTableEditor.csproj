@@ -83,6 +83,10 @@
       <Project>{6eba0a55-b390-4479-a564-58d46094998d}</Project>
       <Name>AdvancedDataGridView</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XmlFileLib\XmlFileLib.csproj">
+      <Project>{111e5c45-dc4d-4d37-9879-a50f66d1ecfb}</Project>
+      <Name>XmlFileLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

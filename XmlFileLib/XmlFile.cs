@@ -17,7 +17,6 @@ namespace XmlFileLib
             dataTable.TableName = Path.GetFileNameWithoutExtension(path);
 
             XmlDocument XMLDoc = new XmlDocument();
-            XMLDoc.PreserveWhitespace = true;
             XMLDoc.Load(path);
 
             XmlNodeList list = XMLDoc.GetElementsByTagName("rows");
@@ -32,12 +31,7 @@ namespace XmlFileLib
                 object[] row = new object[dataTable.Columns.Count];
                 for (int i = 0; i < dataTable.Columns.Count; i++)
                 {
-                    if (node.NodeType == XmlNodeType.Whitespace)
-                    {
-                        row[i] = node.Value;
-                    }
-                    else
-                        row[i] = node.Attributes.GetNamedItem(dataTable.Columns[i].ColumnName)?.Value;
+                    row[i] = node.Attributes.GetNamedItem(dataTable.Columns[i].ColumnName)?.Value;
                 }
                 dataTable.Rows.Add(row);
             }
@@ -48,7 +42,6 @@ namespace XmlFileLib
         public static void SaveDataTableToXMl(DataTable dataTable, string path)
         {
             XmlDocument XMLDoc = new XmlDocument();
-            XMLDoc.PreserveWhitespace = true;
             XMLDoc.Load(path);
 
             XmlNodeList list = XMLDoc.GetElementsByTagName("rows");
@@ -71,25 +64,27 @@ namespace XmlFileLib
                 list[0].AppendChild(child);
             }
 
-            XMLDoc.Save(path);
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "\t";
+            settings.NewLineChars = Environment.NewLine;
+            settings.Encoding = Encoding.UTF8;
+
+            using (XmlWriter writer = XmlWriter.Create(path, settings))
+            {
+                XMLDoc.Save(writer);
+            }
         }
 
         private static List<string> GetAllPossibleAttributes(XmlNode node)
         {
-            List<string> list = new List<string>();
             LinkedList<string> linkedList = new LinkedList<string>();
-            HashSet<string> hashSet = new HashSet<string>();
 
-            LinkedListNode<string> prev = new LinkedListNode<string>(node.FirstChild.Name);
+            LinkedListNode<string> prev = new LinkedListNode<string>(node.FirstChild.Attributes[0].Name);
             linkedList.AddFirst(prev);
 
             foreach (XmlNode child in node.ChildNodes)
             {
-                if (node.FirstChild.NodeType == XmlNodeType.Whitespace)
-                {
-                    continue;
-                }
-
                 foreach (XmlAttribute attribute in child.Attributes)
                 {
                     if (linkedList.Contains(attribute.Name))
