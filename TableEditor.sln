@@ -1,12 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADGVSample", "ADGVSample\ADGVSample.csproj", "{4BC728C0-5830-4848-8BF0-A1A58199FBA9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6EBA0A55-B390-4479-A564-58D46094998D} = {6EBA0A55-B390-4479-A564-58D46094998D}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedDataGridView", "ADGV\AdvancedDataGridView.csproj", "{6EBA0A55-B390-4479-A564-58D46094998D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTableEditor", "DataTableEditor\DataTableEditor.csproj", "{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlFileLib", "XmlFileLib\XmlFileLib.csproj", "{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,8 +44,35 @@ Global
 		{6EBA0A55-B390-4479-A564-58D46094998D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6EBA0A55-B390-4479-A564-58D46094998D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6EBA0A55-B390-4479-A564-58D46094998D}.Release|x86.ActiveCfg = Release|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Debug|x86.Build.0 = Debug|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Release|x86.ActiveCfg = Release|Any CPU
+		{181CA106-7546-4A8E-9AC9-E4CC668C4E8C}.Release|x86.Build.0 = Release|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Debug|x86.Build.0 = Debug|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Release|x86.ActiveCfg = Release|Any CPU
+		{111E5C45-DC4D-4D37-9879-A50F66D1ECFB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1AEC025C-94EB-4980-98B6-508EE4FACF5C}
 	EndGlobalSection
 EndGlobal
