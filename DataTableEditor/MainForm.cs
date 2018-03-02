@@ -13,124 +13,152 @@ using XmlFileLib;
 
 namespace DataTableEditor
 {
-    public partial class MainForm : Form
-    {
-        private Dictionary<int, String> filters = new Dictionary<int, String>();
-        private Dictionary<int, String> sort = new Dictionary<int, String>();
-        private DataTable dt;
+	public partial class MainForm : Form
+	{
+		private Dictionary<int, String> filters = new Dictionary<int, String>();
+		private Dictionary<int, String> sort = new Dictionary<int, String>();
+		private DataTable dt;
 
-        private string filePath;
-        public MainForm()
-        {
-            InitializeComponent();
-            this.dataGridView.AutoGenerateColumns = true;            
-        }
+		private string filePath;
+		public MainForm()
+		{
+			InitializeComponent();
+			this.dataGridView.AutoGenerateColumns = true;
+			dataGridView.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+		}
 
-        
-        private void dataGridView_SortStringChanged(object sender, EventArgs e)
-        {
-            this.bindingSource.Sort = this.dataGridView.SortString;
-        }
 
-        private void dataGridView_FilterStringChanged(object sender, EventArgs e)
-        {
-            this.bindingSource.Filter = this.dataGridView.FilterString;
-        }
+		private void dataGridView_SortStringChanged(object sender, EventArgs e)
+		{
+			this.bindingSource.Sort = this.dataGridView.SortString;
+		}
 
-        private void clearFilterButton_Click(object sender, EventArgs e)
-        {
-            this.dataGridView.ClearFilter(true);
-        }
+		private void dataGridView_FilterStringChanged(object sender, EventArgs e)
+		{
+			this.bindingSource.Filter = this.dataGridView.FilterString;
+		}
 
-        private void clearSortButton_Click(object sender, EventArgs e)
-        {
-            this.dataGridView.ClearSort(true);
-        }
+		private void clearFilterButton_Click(object sender, EventArgs e)
+		{
+			this.dataGridView.ClearFilter(true);
+		}
 
-        private void bindingSource_ListChanged(object sender, ListChangedEventArgs e)
-        {
-            this.toolStripStatusLabel1.Text = Path.GetFileName(filePath) + " || Total rows - " + this.bindingSource.List.Count.ToString();
-            this.searchToolBar.SetColumns(this.dataGridView.Columns);
-        }
+		private void clearSortButton_Click(object sender, EventArgs e)
+		{
+			this.dataGridView.ClearSort(true);
+		}
 
-        private void searchToolBar_Search(object sender, SearchToolBarSearchEventArgs e)
-        {
-            int startColumn = 0;
-            int startRow = 0;
-            if (!e.FromBegin)
-            {
-                bool endcol = this.dataGridView.CurrentCell.ColumnIndex + 1 >= this.dataGridView.ColumnCount;
-                bool endrow = this.dataGridView.CurrentCell.RowIndex + 1 >= this.dataGridView.RowCount;
+		private void bindingSource_ListChanged(object sender, ListChangedEventArgs e)
+		{
+			this.toolStripStatusLabel1.Text = Path.GetFileName(filePath) + " || Total rows - " + this.bindingSource.List.Count.ToString();
+			this.searchToolBar.SetColumns(this.dataGridView.Columns);
+		}
 
-                if (endcol && endrow)
-                {
-                    startColumn = this.dataGridView.CurrentCell.ColumnIndex;
-                    startRow = this.dataGridView.CurrentCell.RowIndex;
-                }
-                else
-                {
-                    startColumn = endcol ? 0 : this.dataGridView.CurrentCell.ColumnIndex + 1;
-                    startRow = this.dataGridView.CurrentCell.RowIndex + (endcol ? 1 : 0);
-                }
-            }
-            DataGridViewCell c = this.dataGridView.FindCell(
-                e.ValueToSearch,
-                e.ColumnToSearch != null ? e.ColumnToSearch.Name : null,
-                startRow,
-                startColumn,
-                e.WholeWord,
-                e.CaseSensitive);
+		private void searchToolBar_Search(object sender, SearchToolBarSearchEventArgs e)
+		{
+			int startColumn = 0;
+			int startRow = 0;
+			if (!e.FromBegin)
+			{
+				bool endcol = this.dataGridView.CurrentCell.ColumnIndex + 1 >= this.dataGridView.ColumnCount;
+				bool endrow = this.dataGridView.CurrentCell.RowIndex + 1 >= this.dataGridView.RowCount;
 
-            if (c != null)
-                this.dataGridView.CurrentCell = c;
-        }
+				if (endcol && endrow)
+				{
+					startColumn = this.dataGridView.CurrentCell.ColumnIndex;
+					startRow = this.dataGridView.CurrentCell.RowIndex;
+				}
+				else
+				{
+					startColumn = endcol ? 0 : this.dataGridView.CurrentCell.ColumnIndex + 1;
+					startRow = this.dataGridView.CurrentCell.RowIndex + (endcol ? 1 : 0);
+				}
+			}
+			DataGridViewCell c = this.dataGridView.FindCell(
+				e.ValueToSearch,
+				e.ColumnToSearch != null ? e.ColumnToSearch.Name : null,
+				startRow,
+				startColumn,
+				e.WholeWord,
+				e.CaseSensitive);
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            int i = filters.Count + 1;
-            filters.Add(i, this.dataGridView.FilterString);
-            sort.Add(i, this.dataGridView.SortString);
+			if (c != null)
+				this.dataGridView.CurrentCell = c;
+		}
 
-            ToolStripMenuItem itm = new ToolStripMenuItem(i.ToString());
-            itm.Click += itm_Click;
-            this.toolStripDropDownButton1.DropDownItems.Add(itm);
-        }
+		private void toolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			int i = filters.Count + 1;
+			filters.Add(i, this.dataGridView.FilterString);
+			sort.Add(i, this.dataGridView.SortString);
 
-        void itm_Click(object sender, EventArgs e)
-        {
-            int i = int.Parse((sender as ToolStripMenuItem).Text);
-            this.dataGridView.LoadFilter(filters[i], sort[i]);
-        }
+			ToolStripMenuItem itm = new ToolStripMenuItem(i.ToString());
+			itm.Click += itm_Click;
+			this.toolStripDropDownButton1.DropDownItems.Add(itm);
+		}
 
-        private void openToolStripButton_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                filePath = openFileDialog1.FileName;
-                LoadFileToGrid();
-            }
-        }
+		void itm_Click(object sender, EventArgs e)
+		{
+			int i = int.Parse((sender as ToolStripMenuItem).Text);
+			this.dataGridView.LoadFilter(filters[i], sort[i]);
+		}
 
-        private void LoadFileToGrid()
-        {
-            dt = XmlFile.GetFilledDataTable(filePath);
+		private void openToolStripButton_Click(object sender, EventArgs e)
+		{
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				filePath = openFileDialog1.FileName;
+				LoadFileToGrid();
+			}
+		}
 
-            dataSet.Tables.Clear();
-            dataSet.Tables.Add(dt);
+		private void LoadFileToGrid()
+		{
+			dt = XmlFile.GetFilledDataTable(filePath);
 
-            this.bindingSource.DataMember = dt.TableName;
+			dataSet.Tables.Clear();
+			dataSet.Tables.Add(dt);
 
-            dataGridView.DataSource = bindingSource;
+			this.bindingSource.DataMember = dt.TableName;
 
-            dataGridView.AutoResizeColumnHeadersHeight();
-                        dataGridView.AutoResizeRows(
-                DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders);
-        }
+			dataGridView.DataSource = bindingSource;
 
-        private void saveToolStripButton_Click(object sender, EventArgs e)
-        {
-            DataTable dataTable = dataSet.Tables[0];
-            XmlFile.SaveDataTableToXMl(dataTable, filePath);
-        }
-    }
+			dataGridView.AutoResizeColumnHeadersHeight();
+			dataGridView.AutoResizeRows(
+	DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders);
+		}
+
+		private void saveToolStripButton_Click(object sender, EventArgs e)
+		{
+			DataTable dataTable = dataSet.Tables[0];
+			XmlFile.SaveDataTableToXMl(dataTable, filePath);
+		}
+
+		private void copyToolStripButton_Click(object sender, EventArgs e)
+		{
+			if (dataGridView.GetCellCount(DataGridViewElementStates.Selected) > 0)
+			{
+				// Add the selection to the clipboard
+				Clipboard.SetDataObject(dataGridView.GetClipboardContent());
+			}
+		}
+
+		private void pasteToolStripButton_Click(object sender, EventArgs e)
+		{
+			string[] newRowData = (Clipboard.GetText().Split('\t'));
+			DataRow dataRow = dt.NewRow();
+			dataRow.ItemArray = newRowData;
+
+			if (dataGridView.SelectedRows.Count == 1)
+				dt.Rows.InsertAt(dataRow, dataGridView.CurrentRow.Index+1);
+			if (dataGridView.SelectedCells.Count == 1 && newRowData.Length == 1)
+			{
+				dataGridView.CurrentCell.Value = newRowData[0];
+			}
+				
+			else
+				// Replace the text box contents with the clipboard text.
+				dt.Rows.Add(Clipboard.GetText().Split('\t'));
+		}
+	}
 }
